@@ -3,24 +3,44 @@ class Calculator:
         return a + b
 
     def subtract(self, a, b):
-        return b - a
+        return a - b
 
     def multiply(self, a, b):
         result = 0
-        for i in range(b+1):
+        for i in range(abs(b)):
+            if b < 0:
+                result = self.subtract(result, a)
+                continue
             result = self.add(result, a)
         return result
 
     def divide(self, a, b):
+        if b == 0: return "Undefined"
+        is_negative = (a < 0) ^ (b < 0)
+
         result = 0
-        while a > b:
-            a = self.subtract(a, b)
+
+        numerator = abs(a)
+        denominator = abs(b)
+
+        while numerator >= denominator:
+            numerator = self.subtract(numerator, denominator)
             result += 1
+
+        if is_negative:
+            result = -result
         return result
     
     def modulo(self, a, b):
-        while a <= b:
-            a = a-b
+        if b == 0: 
+            return "Undefined"
+        
+        if a < 0 or b < 0:
+            return "Error: Requires positive inputs for this method."
+            
+        while a >= b: 
+            a = self.subtract(a, b) 
+
         return a
 
 # Example usage:
